@@ -49,8 +49,9 @@ grid g = zip g [0..]
 horizontalOptions :: Grid -> [Stone]
 horizontalOptions []        = []
 horizontalOptions [x]       = []
-horizontalOptions (x:y:sqs) | (fst x) > fst y = ((fst y, fst x),(snd y, snd x)) : horizontalOptions(y:sqs)
-                            | otherwise = ((fst x, fst y),(snd x, snd y)) : horizontalOptions(y:sqs)
+horizontalOptions ((valx,posx):(valy,posy):sqs) | (posx `mod` 8 == 7) && (posy `mod` 8 == 0) = horizontalOptions((valy,posy):sqs)
+                                                | valx > valy = ((valy, valx),(posy, posx)) : horizontalOptions((valy,posy):sqs)
+                                                | otherwise = ((valx, valy),(posx, posy)) : horizontalOptions((valy,posy):sqs)
 
 verticalOptions :: Grid -> [Stone]
 verticalOptions g = [if (fst (g!!x)) > (fst (g !! (x + 8))) then ((fst (g!!(x + 8)), fst (g !! x)), (x , x + 8)) else ((fst (g!!x), fst (g !! (x + 8))), (x, x + 8)) | x <- [0..(length g)-9]] -- -1 because index 0 and -8 because of the last row
