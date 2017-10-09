@@ -29,8 +29,16 @@ testGrid = [[6,6,2,6,5,2,4,1],
             [5,5,4,0,2,6,0,3],
             [6,0,5,3,4,2,0,3]]
 
+miniGrid :: [[Int]]
+miniGrid =  [[0,1,1],
+             [0,2,1],
+             [0,2,2],
+             [1,2,0]]
+
 field :: Field
 field = concat testGrid
+
+minifield = concat miniGrid
 
 realGrid :: Grid
 realGrid = grid field
