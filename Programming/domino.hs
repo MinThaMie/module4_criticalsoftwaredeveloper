@@ -54,15 +54,16 @@ horizontalOptions ((valx,posx):(valy,posy):sqs) | (posx `mod` 8 == 7) && (posy `
                                                 | otherwise = ((valx, valy),(posx, posy)) : horizontalOptions((valy,posy):sqs)
 
 verticalOptions :: Grid -> [Stone]
-verticalOptions g = [if (fst (g!!x)) > (fst (g !! (x + 8))) then ((fst (g!!(x + 8)), fst (g !! x)), (x , x + 8)) else ((fst (g!!x), fst (g !! (x + 8))), (x, x + 8)) | x <- [0..(length g)-9]] -- -1 because index 0 and -8 because of the last row
+verticalOptions g = [if (fst (g!!x)) > (fst (g !! (x + 8))) then ((fst (g!!(x + 8)), fst (g !! x)), ( x + 8, x)) 
+                     else ((fst (g!!x), fst (g !! (x + 8))), (x, x + 8)) | x <- [0..(length g)-9]] -- -1 because index 0 and -8 because of the last row
 
 allOptions :: Grid -> [Stone]
 allOptions g = (verticalOptions g) ++ (horizontalOptions g)
 
 uniques :: [Stone] -> [Stone] -- Does not work on allOptions now
 uniques [] = []
-uniques (x:xs) | fst x `elem` (map fst xs) = uniques (filter ((/= (fst x)).fst) xs)
-               | otherwise   = x : uniques xs
+uniques (((val1,val2),y):xs) | (val1,val2) `elem` (map fst xs) = uniques (filter ((/= (val1,val2)).fst) xs)
+               | otherwise   = ((val1,val2),y) : uniques xs
 
 solution :: Field -> [Stone] -> Field
 solution f []         = f
