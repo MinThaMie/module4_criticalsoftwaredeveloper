@@ -113,3 +113,12 @@ solve' b (opt:opts) f | null b && null opts = f
                       | null b || null opts = f
                       | null (uniques opts) = solve' (removeStonesFromBones [opt] b) (removeAllUsedValues [opt] (removeAllUsedSquares [opt] opts)) (solution f [opt] b)
                       | otherwise =  solve' (removeStonesFromBones (uniques (opt:opts)) b) (removeAllUsedSquares (uniques (opt:opts)) opts) (solution f (uniques (opt:opts)) b)
+
+chop :: Int -> [a] -> [[a]]
+chop n [] = []
+chop n xs = take n xs : chop n (drop n xs)showField f = putStr . unlines $ map show (chop 8 f)showField f = putStr . unlines $ map show (chop 8 f)
+
+showField f = putStr . unlines $ map show (chop 8 f)
+
+showSolutions :: [Field] -> IO ()
+showSolutions fs = sequence_ [showField f | f <- fs] 
