@@ -116,9 +116,29 @@ solve' b (opt:opts) f | null b && null opts = f
 
 chop :: Int -> [a] -> [[a]]
 chop n [] = []
-chop n xs = take n xs : chop n (drop n xs)showField f = putStr . unlines $ map show (chop 8 f)showField f = putStr . unlines $ map show (chop 8 f)
+chop n xs = take n xs : chop n (drop n xs)
+
+data Tree a = Node a [Tree a] deriving Show
+
+move :: Field -> Stone -> Bone -> Field
+move f ((val1, val2), (pos1, pos2)) b = replaceWith pos1 (fst b) (replaceWith pos2 (fst b) f)
+                                        where replaceWith i v list = xs ++ [v] ++ ys
+                                                                     where (xs, _:ys) = splitAt i list
+
+moves :: Field -> Bone -> [Stone] -> [(Field, [Stone])]
+moves f b opts = [(move f optB b, (removeUsedValues optB (removeUsedSquares optB opts)))| optB <- opts, (snd b) == (fst optB)]
+
+gametree :: (Field,[Stone]) -> [Bone] -> Tree (Field,Bool) -- Pass options to gametree because you can then remove the options
+gametree (f,opts) [] = Node (f,(null opts)) []
+gametree (f,opts) (b : bns) = Node (f,(null opts)) [gametree (f',opts') bns | (f', opts') <- moves f b opts]
 
 showField f = putStr . unlines $ map show (chop 8 f)
 
+oplossingen :: Tree (Field, Bool) -> [Field]
+oplossingen (Node (f,bool) []) = if bool then [f] else [] 
+oplossingen (Node a (t:ts)) = oplossingen t ++ oplossingen (Node a ts)
+
 showSolutions :: [Field] -> IO ()
 showSolutions fs = sequence_ [showField f | f <- fs] 
+
+-- Keep track if all the squares are used, not only the options :)  
