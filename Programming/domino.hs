@@ -65,12 +65,13 @@ uniques [] = []
 uniques (((val1,val2),y):xs) | (val1,val2) `elem` (map fst xs) = uniques (filter ((/= (val1,val2)).fst) xs)
                | otherwise   = ((val1,val2),y) : uniques xs
 
-solution :: Field -> [Stone] -> Field
-solution f []         = f
-solution f (unq:unqs) = solution (tupleReplace unq f) unqs
+solution :: Field -> [Stone] -> [Bone] -> Field
+solution f [] bns     = f
+solution f (unq:unqs) bns = solution (tupleReplace unq bns f) unqs bns
 
-tupleReplace :: Stone -> Field -> Field
-tupleReplace s f = replaceAt (fst(snd s)) (findBoneValue (fst s)) (replaceAt (snd(snd s)) (findBoneValue (fst s)) f) 
+tupleReplace :: Stone -> [Bone] -> Field -> Field
+tupleReplace ((val1, val2), (pos1, pos2)) bns f = replaceAt pos1 (findBoneValue bone bns) (replaceAt pos2 (findBoneValue bone bns) f)
+                                              where bone = (val1, val2) 
 
 replaceAt :: Int -> [Int] -> Field -> Field -- [Int] == bone number
 replaceAt i v list = xs ++ v ++ ys
