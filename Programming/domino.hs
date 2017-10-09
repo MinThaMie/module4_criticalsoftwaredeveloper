@@ -77,6 +77,26 @@ replaceAt :: Int -> [Int] -> Field -> Field -- [Int] == bone number
 replaceAt i v list = xs ++ v ++ ys
                      where (xs, _:ys) = splitAt i list
 
+removeUsedSquares :: Stone -> [Stone] -> [Stone]
+removeUsedSquares stone [] = []
+removeUsedSquares ((val1,val2), (pos1, pos2)) (((valx, valy),(posx, posy)):stns)| pos1 == posx || pos1 == posy || pos2 == posy || pos2 == posx = removeUsedSquares ((val1,val2), (pos1, pos2)) stns
+                                                                                | otherwise = ((valx,valy),(posx,posy)) : removeUsedSquares ((val1,val2), (pos1, pos2)) stns
+
+removeUsedValues :: Stone -> [Stone] -> [Stone] 
+removeUsedValues stone [] = []
+removeUsedValues ((val1,val2), (pos1, pos2)) (((valx, valy),(posx, posy)):stns)| val1 == valx && val2 == valy || val1 == valy && val2 == valx = removeUsedValues ((val1,val2), (pos1, pos2)) stns
+                                                                               | otherwise = ((valx,valy),(posx,posy)) : removeUsedValues ((val1,val2), (pos1, pos2)) stns
+                      
+removeAllUsedSquares :: [Stone] -> [Stone] -> [Stone]
+removeAllUsedSquares [] opts = opts
+removeAllUsedSquares _ [] = []
+removeAllUsedSquares (rmv:rmvs) opts = removeAllUsedSquares rmvs (removeUsedSquares rmv opts)
+
+removeAllUsedValues :: [Stone] -> [Stone] -> [Stone]
+removeAllUsedValues [] opts = opts
+removeAllUsedValues _ [] = []
+removeAllUsedValues (rmv:rmvs) opts = removeAllUsedValues rmvs (removeUsedValues rmv opts)
+
 removeFromBones :: Pips -> [Bone] -> [Bone]
 removeFromBones pip bns = filter ((/= pip).snd) bns
 
