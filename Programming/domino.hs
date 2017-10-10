@@ -124,6 +124,7 @@ gametree :: (Field,[Stone]) -> [Bone] -> Tree (Field,Bool) -- Pass options to ga
 gametree (f,opts) [] = Node (f, null opts) []
 gametree (f,opts) (b : bns) = Node (f,((null opts) && (null ([1..28] \\ f)))) [gametree (f',opts') bns | (f', opts') <- moves f b opts]
 -- Why null intersection check in general case instead of base case??
+-- TODO: \\ twice on 1..28
 showField f = putStr . unlines $ map show (chop 8 f)
 
 oplossingen :: Tree (Field, Bool) -> [Field]
