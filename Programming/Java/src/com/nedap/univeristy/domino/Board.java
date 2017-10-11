@@ -70,6 +70,10 @@ public class Board {
 		return this.bones;
 	}
 
+	public void removeBone(int index){
+		bones.remove(index);
+	}
+
 	public List<Bone> cloneBones() {
 		List<Bone> deepcopy = new ArrayList<>();
 		for (Bone b : bones){
@@ -142,10 +146,9 @@ public class Board {
 			this.field = field;
 		}
 
-		public void placeStone(Stone stone){
-			int value = findBoneValue(stone.getVal1(), stone.getVal2());
-			field.set(stone.getPos1(), value);
-			field.set(stone.getPos2(), value);
+		public void placeStone(Stone stone, int bonevalue){
+			field.set(stone.getPos1(), bonevalue);
+			field.set(stone.getPos2(), bonevalue);
 		}
 
 		public Integer getElem(int i){
