@@ -11,17 +11,26 @@ public class Board {
 	private Field field;
 	private List<Stone> options;
 	private List<Bone> bones;
+	private boolean full;
 
 	public Board(List<Integer> field, List<Bone> bones){
 		this.field = new Field(field);
 		this.options = createOptions();
 		this.bones = bones;
+		this.full = false;
+	}
+
 	public Board(Field field, List<Stone> options, List<Bone> bones) {
 		this.field = field;
 		this.options = options;
 		this.bones = bones;
 		this.full = bones.isEmpty();
 	}
+
+	public boolean isFull() {
+		return full;
+	}
+
 	public Board clone(){
 		return new Board(field.clone(), cloneOptions(),cloneBones());
 	}
