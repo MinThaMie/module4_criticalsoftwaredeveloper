@@ -125,13 +125,22 @@ gametree (f,opts) [] = Node (f, null opts) []
 gametree (f,opts) (b : bns) = Node (f,((null opts) && (null ([1..28] \\ f)))) [gametree (f',opts') bns | (f', opts') <- moves f b opts]
 -- Why null intersection check in general case instead of base case??
 -- TODO: \\ twice on 1..28
-showField f = putStr . unlines $ map show (chop 8 f)
 
 oplossingen :: Tree (Field, Bool) -> [Field]
 oplossingen (Node (f,bool) []) = if bool then [f] else [] 
 oplossingen (Node a (t:ts)) = oplossingen t ++ oplossingen (Node a ts)
 
 showSolutions :: [Field] -> IO ()
-showSolutions fs = sequence_ [showField f | f <- fs] 
+showSolutions fs = sequence_ [printField f | f <- fs] 
+
+printField :: Field -> IO();
+printField f = putStrLn . unlines $ map showRow (chop 8 f)
+
+showRow :: [Int] -> String
+showRow = concat . map showNum
+
+showNum :: Int -> String
+showNum n | n < 10    = "  " ++ show n ++ " "
+          | otherwise = " " ++ show n ++ " "
 
 -- Keep track if all the squares are used, not only the options :)  
