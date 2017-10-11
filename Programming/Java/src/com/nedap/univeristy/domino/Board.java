@@ -56,6 +56,16 @@ public class Board {
 		return stones;
 	}
 
+	public List<Stone> findPosition(int x, int y){
+		List<Stone> stones = new ArrayList<>();
+		for (Stone stone: options){
+			if (stone.getPos1() == x || stone.getPos2() == x || stone.getPos1() == y || stone.getPos2() == y){
+				stones.add(stone);
+			}
+		}
+		return stones;
+	}
+
 	public List<Bone> getBones(){
 		return this.bones;
 	}
