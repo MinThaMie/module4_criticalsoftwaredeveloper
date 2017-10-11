@@ -37,7 +37,7 @@ public class Board {
 		return -1;
 	}
 
-	public List<Stone> findStone(int x, int y){ // X is always smaller
+	public List<Stone> findStones(int x, int y){ // X is always smaller
 		List<Stone> stones = new ArrayList<>();
 		for (Stone stone : options){
 			if (stone.getVal1() == x && stone.getVal2() == y){
