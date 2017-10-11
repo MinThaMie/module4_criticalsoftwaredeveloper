@@ -28,4 +28,23 @@ public class Game {
 	public Board getBoard() {
 		return board;
 	}
+
+	public void play(){
+		GameTree tree = new GameTree(board);
+		List<Board.Field> fields = tree.findSolution();
+		if (fields.isEmpty()){
+			System.out.println("The following grid has no solutions");
+			System.out.println(board.getField());
+		} else {
+			System.out.println("Original grid: ");
+			System.out.println(board.getField());
+			System.out.println("The solution(s):");
+			int i = 1;
+			for (Board.Field field : fields) {
+				System.out.println("No. " + i);
+				System.out.println(field);
+				i++;
+			}
+		}
+	}
 }
