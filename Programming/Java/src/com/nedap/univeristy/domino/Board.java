@@ -119,6 +119,11 @@ public class Board {
 		return deepcopy;
 	}
 
+	public void removeFromOptions(Stone stone){
+		options.removeAll(findStones(stone.getVal1(),stone.getVal2()));
+		options.removeAll(findPosition(stone.getPos1(),stone.getPos2()));
+	}
+
 	public boolean isCorrect(){
 		return options.isEmpty() && bones.isEmpty();
 	}
