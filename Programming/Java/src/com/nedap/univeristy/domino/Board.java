@@ -22,6 +22,8 @@ public class Board {
 		this.bones = bones;
 		this.full = bones.isEmpty();
 	}
+	public Board clone(){
+		return new Board(field.clone(), cloneOptions(),cloneBones());
 	}
 
 
