@@ -70,6 +70,13 @@ public class Board {
 		return this.bones;
 	}
 
+	public List<Bone> cloneBones() {
+		List<Bone> deepcopy = new ArrayList<>();
+		for (Bone b : bones){
+			deepcopy.add(b);
+		}
+		return deepcopy;
+	}
 
 	private List<Stone> createOptions(){
 		List<Stone> options = new LinkedList<>(); // TODO: Maybe arraylist
@@ -102,6 +109,14 @@ public class Board {
 			}
 		}
 		return  options;
+	}
+
+	private List<Stone> cloneOptions(){
+		List<Stone> deepcopy = new ArrayList<>();
+		for (Stone s : options){
+			deepcopy.add(s);
+		}
+		return deepcopy;
 	}
 
 	public boolean isCorrect(){
@@ -143,6 +158,14 @@ public class Board {
 				grid = grid + " " + ( field.get(i) < 10 ? " " + field.get(i) + " " : "" + field.get(i) + " " ) + (i % 8 == 7 ? "\n" : "");
 			}
 			return grid;
+		}
+
+		public Field clone(){
+			List<Integer> deepcopy = new ArrayList<>();
+			for (Integer i : field){
+				deepcopy.add(i);
+			}
+			return new Field(deepcopy);
 		}
 	}
 }
