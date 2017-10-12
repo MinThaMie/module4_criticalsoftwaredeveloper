@@ -97,6 +97,10 @@ showSolutions fs = sequence_ [printField f | f <- fs]
 printField :: Field -> IO();
 printField f = putStrLn . unlines $ map showRow (chop 8 f)
 
+chop :: Int -> [a] -> [[a]]
+chop n [] = []
+chop n xs = take n xs : chop n (drop n xs)
+
 showRow :: [Int] -> String
 showRow = concat . map showNum
 
@@ -107,4 +111,17 @@ showNum n | n < 10    = "  " ++ show n ++ " "
 main :: IO ()
 main = showSolutions(solutions(gametree (field, allOptions(grid field)) (bones 6) ))
 
+solveAll :: IO ()
+solveAll = do putStrLn "Grid no.1"
+              printField field
+              putStrLn "Solution(s):"
+              showSolutions(solutions(gametree (field, allOptions(grid field)) (bones 6) ))
+              putStrLn "Grid no.2"
+              printField field
+              putStrLn "Solution(s):"
+              showSolutions(solutions(gametree (field2, allOptions(grid field2)) (bones 6) ))
+              putStrLn "Grid no.3"
+              printField field
+              putStrLn "Solution(s):"
+              showSolutions(solutions(gametree (field3, allOptions(grid field3)) (bones 6) ))
 

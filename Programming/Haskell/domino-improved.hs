@@ -138,3 +138,16 @@ showNum :: Int -> String
 showNum n | n < 10    = "  " ++ show n ++ " "
           | otherwise = " " ++ show n ++ " "
 
+solveAll :: IO ()
+solveAll = do putStrLn "Grid no.1"
+              printField field
+              putStrLn "Solution(s):"
+              showSolutions(solutions(gametree (field, allOptions(grid field)) (bones 6) ))
+              putStrLn "Grid no.2"
+              printField field
+              putStrLn "Solution(s):"
+              showSolutions(solutions(gametree (field2, allOptions(grid field2)) (bones 6) ))
+              putStrLn "Grid no.3"
+              printField field
+              putStrLn "Solution(s):"
+              showSolutions(solutions(gametree (field3, allOptions(grid field3)) (bones 6) ))
