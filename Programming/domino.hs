@@ -105,7 +105,7 @@ move f ((val1, val2), (pos1, pos2)) b = replaceWith pos1 (fst b) (replaceWith po
                                                                      where (xs, _:ys) = splitAt i list
 
 moves :: Field -> Bone -> [Stone] -> [(Field, [Stone])]
-moves f b opts = [(move f optB b, (removeUsedValues optB (removeUsedSquares optB opts)))| optB <- opts, (snd b) == (fst optB)]
+moves f b opts = [(move f optB b, (removeUsedSquares optB (removeUsedValues optB opts)))| optB <- opts, (snd b) == (fst optB)]
 
 gametree :: (Field,[Stone]) -> [Bone] -> Tree (Field,Bool) -- Pass options to gametree because you can then remove the options
 gametree (f,opts) [] = Node (f, null opts) []
