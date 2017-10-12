@@ -113,9 +113,9 @@ gametree (f,opts) (b : bns) = Node (f,((null opts) && (null ([1..28] \\ f)))) [g
 -- Why null intersection check in general case instead of base case??
 -- TODO: \\ twice on 1..28
 
-oplossingen :: Tree (Field, Bool) -> [Field]
-oplossingen (Node (f,bool) []) = if bool then [f] else [] 
-oplossingen (Node a (t:ts)) = oplossingen t ++ oplossingen (Node a ts)
+solutions :: Tree (Field) -> [Field]
+solutions (Node (f) []) = if allBonesUsed f then [f] else [] 
+solutions (Node a (t:ts)) = solutions t ++ solutions (Node a ts)
 
 showSolutions :: [Field] -> IO ()
 showSolutions fs = sequence_ [printField f | f <- fs] 
