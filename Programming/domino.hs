@@ -107,11 +107,12 @@ move f ((val1, val2), (pos1, pos2)) b = replaceWith pos1 (fst b) (replaceWith po
 moves :: Field -> Bone -> [Stone] -> [(Field, [Stone])]
 moves f b opts = [(move f optB b, (removeUsedSquares optB (removeUsedValues optB opts)))| optB <- opts, (snd b) == (fst optB)]
 
-gametree :: (Field,[Stone]) -> [Bone] -> Tree (Field,Bool) -- Pass options to gametree because you can then remove the options
-gametree (f,opts) [] = Node (f, null opts) []
-gametree (f,opts) (b : bns) = Node (f,((null opts) && (null ([1..28] \\ f)))) [gametree (f',opts') bns | (f', opts') <- moves f b opts]
--- Why null intersection check in general case instead of base case??
--- TODO: \\ twice on 1..28
+gametree :: (Field,[Stone]) -> [Bone] -> Tree (Field) -- Pass options to gametree because you can then remove the options
+gametree (f,opts) [] = Node (f) []
+gametree (f,opts) (b : bns) = Node (f) [gametree (f',opts') bns | (f', opts') <- moves f b opts]
+
+allBonesUsed :: Field -> Bool
+allBonesUsed f = null ((f \\ [1..28])\\[1..28]) 
 
 solutions :: Tree (Field) -> [Field]
 solutions (Node (f) []) = if allBonesUsed f then [f] else [] 
