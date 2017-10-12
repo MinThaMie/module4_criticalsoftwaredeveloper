@@ -15,9 +15,6 @@ bones max = zip [1..] (pips max)
 pips :: Int -> [Pips]
 pips n = [(x,y) | x <- [0..n], y <- [x..n]]
 
-findBoneValue :: Pips -> [Bone] -> [Int]
-findBoneValue p bns = [ fst b | b <- bns, snd b == p ]
-
 field :: Field
 field = [6,6,2,6,5,2,4,1,
          1,3,2,0,1,0,3,4,
@@ -63,23 +60,6 @@ verticalOptions g = [if (fst (g!!x)) > (fst (g !! (x + 8))) then ((fst (g!!(x + 
 allOptions :: Grid -> [Stone]
 allOptions g = (verticalOptions g) ++ (horizontalOptions g)
 
-uniques :: [Stone] -> [Stone] -- Does not work on allOptions now
-uniques [] = []
-uniques (((val1,val2),y):xs) | (val1,val2) `elem` (map fst xs) = uniques (filter ((/= (val1,val2)).fst) xs)
-               | otherwise   = ((val1,val2),y) : uniques xs
-
-solution :: Field -> [Stone] -> [Bone] -> Field
-solution f [] bns     = f
-solution f (unq:unqs) bns = solution (tupleReplace unq bns f) unqs bns
-
-tupleReplace :: Stone -> [Bone] -> Field -> Field
-tupleReplace ((val1, val2), (pos1, pos2)) bns f = replaceAt pos1 (findBoneValue bone bns) (replaceAt pos2 (findBoneValue bone bns) f)
-                                              where bone = (val1, val2) 
-
-replaceAt :: Int -> [Int] -> Field -> Field -- [Int] == bone number
-replaceAt i v list = xs ++ v ++ ys
-                     where (xs, _:ys) = splitAt i list
-
 removeUsedSquares :: Stone -> [Stone] -> [Stone]
 removeUsedSquares stone [] = []
 removeUsedSquares ((val1,val2), (pos1, pos2)) (((valx, valy),(posx, posy)):stns)| pos1 == posx || pos1 == posy || pos2 == posy || pos2 == posx = removeUsedSquares ((val1,val2), (pos1, pos2)) stns
@@ -89,20 +69,6 @@ removeUsedValues :: Stone -> [Stone] -> [Stone]
 removeUsedValues stone [] = []
 removeUsedValues ((val1,val2), (pos1, pos2)) (((valx, valy),(posx, posy)):stns)| val1 == valx && val2 == valy = removeUsedValues ((val1,val2), (pos1, pos2)) stns
                                                                                | otherwise = ((valx,valy),(posx,posy)) : removeUsedValues ((val1,val2), (pos1, pos2)) stns
-                      
-removeAllUsedSquares :: [Stone] -> [Stone] -> [Stone]
-removeAllUsedSquares [] opts = opts
-removeAllUsedSquares _ [] = []
-removeAllUsedSquares (rmv:rmvs) opts = removeAllUsedSquares rmvs (removeUsedSquares rmv opts)
-
-removeAllUsedValues :: [Stone] -> [Stone] -> [Stone]
-removeAllUsedValues [] opts = opts
-removeAllUsedValues _ [] = []
-removeAllUsedValues (rmv:rmvs) opts = removeAllUsedValues rmvs (removeUsedValues rmv opts)
-
-chop :: Int -> [a] -> [[a]]
-chop n [] = []
-chop n xs = take n xs : chop n (drop n xs)
 
 data Tree a = Node a [Tree a] deriving Show
 
@@ -125,11 +91,6 @@ solutions :: Tree (Field) -> [Field]
 solutions (Node (f) []) = if allBonesUsed f then [f] else [] 
 solutions (Node a (t:ts)) = solutions t ++ solutions (Node a ts)
 
--- solutions :: Tree Field -> [Field]
--- solutions (Node b []) | allBonesUsed b    = [b]
---                       | otherwise = []
--- solutions (Node b ts) = [b' | ts' <- ts, b' <- solutions ts']
-
 showSolutions :: [Field] -> IO ()
 showSolutions fs = sequence_ [printField f | f <- fs] 
 
@@ -146,10 +107,4 @@ showNum n | n < 10    = "  " ++ show n ++ " "
 main :: IO ()
 main = showSolutions(solutions(gametree (field, allOptions(grid field)) (bones 6) ))
 
-leafTree :: Tree(Field) -> [Field]
-leafTree (Node (f) []) = [f]
-leafTree (Node a (t:ts)) = leafTree t ++ leafTree (Node a ts)
 
-countTree :: Tree(Field) -> Int
-countTree (Node (f) []) = 1
-countTree (Node a (t:ts)) = countTree t + countTree (Node a ts)
