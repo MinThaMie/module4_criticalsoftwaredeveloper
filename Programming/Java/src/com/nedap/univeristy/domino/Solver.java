@@ -1,14 +1,16 @@
 package com.nedap.univeristy.domino;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * The solves contains a begin board and you can solve this by calling the solve-method
  * Created by anne-greeth.vanherwijnen on 10/10/2017.
  */
-public class Game {
+public class Solver {
 	private Board board;
 
-	public Game(List<Integer> field, int maxBone){
+	public Solver(List<Integer> field, int maxBone){
 		this.board = new Board(field, createBones(maxBone));
 	}
 
@@ -29,7 +31,7 @@ public class Game {
 		return board;
 	}
 
-	public void play(){
+	public void solve(){
 		GameTree tree = new GameTree(board);
 		List<Board.Field> fields = tree.findSolution();
 		if (fields.isEmpty()){
