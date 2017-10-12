@@ -1,13 +1,8 @@
-package test;
+package com.nedap.univeristy.domino;
 
-import com.nedap.univeristy.domino.Board;
-import com.nedap.univeristy.domino.GameTree;
-import com.nedap.univeristy.domino.Stone;
 import org.junit.Before;
 import org.junit.Test;
-import com.nedap.univeristy.domino.Game;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,18 +12,18 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by anne-greeth.vanherwijnen on 10/10/2017.
  */
-public class TestGame {
-	private Game gameSix;
+public class TestSolver {
+	private Solver solverSix;
 	private Board gameSixBoard;
-	private Game secondGame;
-	private Game flawedGame;
+	private Solver secondSolver;
+	private Solver flawedSolver;
 
 	@Before
 	public void setUp() {
-		gameSix = new Game(Arrays.asList(6,6,2,6,5,2,4,1,1,3,2,0,1,0,3,4,1,3,2,4,6,6,5,4,1,0,4,3,2,1,1,2,5,1,3,6,0,4,5,5,5,5,4,0,2,6,0,3,6,0,5,3,4,2,0,3), 6);
-		gameSixBoard = gameSix.getBoard();
-		flawedGame = new Game(Arrays.asList(5,6,2,6,5,2,4,1,1,3,2,0,1,0,3,4,1,3,2,4,6,6,5,4,1,0,4,3,2,1,1,2,5,1,3,6,0,4,5,5,5,5,4,0,2,6,0,3,6,0,5,3,4,2,0,3), 6);
-		secondGame = new Game(Arrays.asList(4,2,5,2,6,3,5,4,5,0,4,3,1,4,1,1,1,2,3,0,2,2,2,2,1,4,0,1,3,5,6,5,4,0,6,0,3,6,6,5,4,0,1,6,4,0,3,0,6,5,3,6,2,1,5,3), 6);
+		solverSix = new Solver(Arrays.asList(6,6,2,6,5,2,4,1,1,3,2,0,1,0,3,4,1,3,2,4,6,6,5,4,1,0,4,3,2,1,1,2,5,1,3,6,0,4,5,5,5,5,4,0,2,6,0,3,6,0,5,3,4,2,0,3), 6);
+		gameSixBoard = solverSix.getBoard();
+		flawedSolver = new Solver(Arrays.asList(5,6,2,6,5,2,4,1,1,3,2,0,1,0,3,4,1,3,2,4,6,6,5,4,1,0,4,3,2,1,1,2,5,1,3,6,0,4,5,5,5,5,4,0,2,6,0,3,6,0,5,3,4,2,0,3), 6);
+		secondSolver = new Solver(Arrays.asList(4,2,5,2,6,3,5,4,5,0,4,3,1,4,1,1,1,2,3,0,2,2,2,2,1,4,0,1,3,5,6,5,4,0,6,0,3,6,6,5,4,0,1,6,4,0,3,0,6,5,3,6,2,1,5,3), 6);
 	}
 	@Test
 	public void createBonesTest() {
@@ -64,9 +59,9 @@ public class TestGame {
 	public void testGameTree(){
 		GameTree gameTreeGameSix = new GameTree(gameSixBoard);
 		List<Board.Field> fields = gameTreeGameSix.findSolution();
-		GameTree secondGameTree = new GameTree(secondGame.getBoard());
+		GameTree secondGameTree = new GameTree(secondSolver.getBoard());
 		List<Board.Field> fields2 = secondGameTree.findSolution();
-		GameTree flawedGameTree = new GameTree(flawedGame.getBoard());
+		GameTree flawedGameTree = new GameTree(flawedSolver.getBoard());
 		List<Board.Field> noFields = flawedGameTree.findSolution();
 		for (Board.Field field : fields2){
 			System.out.println(field);
@@ -80,6 +75,7 @@ public class TestGame {
 	public void testCounter(){
 		GameTree gameTreeGameSix = new GameTree(gameSixBoard);
 		assertEquals(3763, gameTreeGameSix.leafs().size());
+		assertEquals(gameTreeGameSix.counter(), gameTreeGameSix.leafs().size());
 	}
 
 }
