@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The GameTree is contains a Board as node and a list of other trees that are its children.
  * Created by anne-greeth.vanherwijnen on 10/10/2017.
  */
 public class GameTree {

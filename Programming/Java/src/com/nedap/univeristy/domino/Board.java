@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * A board contains a grid (might be partially filled), the options that you can still place and the bones that need to be placed.
  * Created by anne-greeth.vanherwijnen on 10/10/2017.
  */
 public class Board {
@@ -80,6 +81,10 @@ public class Board {
 		return deepcopy;
 	}
 
+	/**
+	 * This function creates all the options for the bones on the board, horizontally and vertically.
+	 * The values are ordered to match with the bones.
+	 */
 	private List<Stone> createOptions(){
 		List<Stone> options = new LinkedList<>(); // TODO: Maybe arraylist
 		for (int snd = 1; snd < field.getSize(); snd++){ // Horizontal options

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * This main method solves the three grids for the assignement PDF
+ */
 public class Main {
 
     public static void main(String[] args) {

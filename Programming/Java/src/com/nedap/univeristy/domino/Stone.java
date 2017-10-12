@@ -1,6 +1,8 @@
 package com.nedap.univeristy.domino;
 
 /**
+ * A Stone is a description of two adjacent squares. It describes their values and their position in the array (Field)
+ * The first value is always smaller.
  * Created by anne-greeth.vanherwijnen on 10/10/2017.
  */
 public class Stone {
