@@ -13,10 +13,10 @@ public class GameTree {
 	public GameTree(Board board) {
 		this.children = new ArrayList<>();
 		this.node = board;
-		if (!board.isCorrect()) {
+		if (!board.isCorrect()) { //Might need a rename because it now checks empty on bones and options
 			Bone chosen = board.getBones().get(0);
 			List<Stone> options = board.findStones(chosen.getPip1(), chosen.getPip2());
-			if (!options.isEmpty()) {
+			if (!options.isEmpty()) { //TODO: Why does this work even when it's removed
 				board.removeBone(0);
 				for (Stone s : options) {
 					Board newBoard = board.clone();
