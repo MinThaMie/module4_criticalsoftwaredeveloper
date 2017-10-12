@@ -1,7 +1,5 @@
 import Data.Char
 import Data.List
-import System.IO 
-import Data.Maybe
 
 type Grid   = [Square] -- List of squares
 type Bone   = (Int, Pips) -- Number and dots
