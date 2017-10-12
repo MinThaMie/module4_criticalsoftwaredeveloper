@@ -41,10 +41,6 @@ public class GameTree {
 		return solutions;
 	}
 
-	private boolean isCorrect(){
-		return node.isCorrect();
-	}
-
 	public int counter(){
 		int count = 0;
 		for (GameTree child: children){
