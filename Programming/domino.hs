@@ -130,4 +130,13 @@ showNum :: Int -> String
 showNum n | n < 10    = "  " ++ show n ++ " "
           | otherwise = " " ++ show n ++ " "
 
--- Keep track if all the squares are used, not only the options :)  
+main :: IO ()
+main = showSolutions(solutions(gametree (field, allOptions(grid field)) (bones 6) ))
+
+leafTree :: Tree(Field) -> [Field]
+leafTree (Node (f) []) = [f]
+leafTree (Node a (t:ts)) = leafTree t ++ leafTree (Node a ts)
+
+countTree :: Tree(Field) -> Int
+countTree (Node (f) []) = 1
+countTree (Node a (t:ts)) = countTree t + countTree (Node a ts)
