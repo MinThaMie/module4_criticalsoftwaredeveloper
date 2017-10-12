@@ -80,7 +80,7 @@ removeUsedSquares ((val1,val2), (pos1, pos2)) (((valx, valy),(posx, posy)):stns)
 
 removeUsedValues :: Stone -> [Stone] -> [Stone] 
 removeUsedValues stone [] = []
-removeUsedValues ((val1,val2), (pos1, pos2)) (((valx, valy),(posx, posy)):stns)| val1 == valx && val2 == valy || val1 == valy && val2 == valx = removeUsedValues ((val1,val2), (pos1, pos2)) stns
+removeUsedValues ((val1,val2), (pos1, pos2)) (((valx, valy),(posx, posy)):stns)| val1 == valx && val2 == valy = removeUsedValues ((val1,val2), (pos1, pos2)) stns
                                                                                | otherwise = ((valx,valy),(posx,posy)) : removeUsedValues ((val1,val2), (pos1, pos2)) stns
                       
 removeAllUsedSquares :: [Stone] -> [Stone] -> [Stone]
