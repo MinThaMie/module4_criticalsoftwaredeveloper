@@ -76,4 +76,10 @@ public class TestGame {
 		assertTrue(noFields.isEmpty());
 	}
 
+	@Test
+	public void testCounter(){
+		GameTree gameTreeGameSix = new GameTree(gameSixBoard);
+		assertEquals(3763, gameTreeGameSix.leafs().size());
+	}
+
 }
