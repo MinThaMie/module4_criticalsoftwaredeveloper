@@ -1,10 +1,5 @@
 package com.nedap.univeristy.domino;
 
-import java.util.Objects;
-
-/**
- * Created by anne-greeth.vanherwijnen on 10/10/2017.
- */
 public class Bone {
 	private int value;
 	private int pip1;

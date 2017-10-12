@@ -126,10 +126,6 @@ public class Board {
 		options.removeAll(findPosition(stone.getPos1(),stone.getPos2()));
 	}
 
-	public boolean isCorrect(){
-		return options.isEmpty() && bones.isEmpty();
-	}
-
 	public Field getField() {
 		return field;
 	}
