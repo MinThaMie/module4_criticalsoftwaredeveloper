@@ -39,7 +39,11 @@ public class Game {
 		} else {
 			System.out.println("Original grid: ");
 			System.out.println(board.getField());
-			System.out.println("The solution(s):");
+			if (fields.size() == 1) {
+				System.out.println("The solution:");
+			} else {
+				System.out.println("The solutions:");
+			}
 			int i = 1;
 			for (Board.Field field : fields) {
 				System.out.println("No. " + i);
