@@ -44,4 +44,27 @@ public class GameTree {
 		return node.isCorrect();
 	}
 
+	public int counter(){
+		int count = 0;
+		for (GameTree child: children){
+			if (child.children.isEmpty()){
+				count = count + 1;
+			} else {
+				count = count + child.counter();
+			}
+		}
+		return count;
+	}
+
+	public List<Board.Field> leafs(){
+		List<Board.Field> leafs = new ArrayList<>();
+		for (GameTree child: children){
+			if (child.children.isEmpty()){
+				leafs.add(child.node.getField());
+			} else {
+				leafs.addAll(child.leafs());
+			}
+		}
+		return leafs;
+	}
 }
