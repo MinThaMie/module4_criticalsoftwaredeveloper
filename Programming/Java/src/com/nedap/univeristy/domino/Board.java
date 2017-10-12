@@ -31,11 +31,9 @@ public class Board {
 		return full;
 	}
 
-	public Board clone(){
-		return new Board(field.clone(), cloneOptions(),cloneBones());
+	public Board cloneBoard(){
+		return new Board(field.cloneField(), cloneOptions(),cloneBones());
 	}
-
-
 
 	public int findBoneValue(int x, int y){
 		for (Bone bone : bones){
@@ -158,6 +156,15 @@ public class Board {
 		public int getSize(){
 			return field.size();
 		}
+
+		public Field cloneField(){
+			List<Integer> deepcopy = new ArrayList<>();
+			for (Integer i : field){
+				deepcopy.add(i);
+			}
+			return new Field(deepcopy);
+		}
+
 		@Override
 		public String toString(){
 			String grid = "";
@@ -168,12 +175,5 @@ public class Board {
 			return grid;
 		}
 
-		public Field clone(){
-			List<Integer> deepcopy = new ArrayList<>();
-			for (Integer i : field){
-				deepcopy.add(i);
-			}
-			return new Field(deepcopy);
-		}
 	}
 }
