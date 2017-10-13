@@ -66,7 +66,7 @@ allOptions g = (verticalOptions g) ++ (horizontalOptions g)
 uniques :: [Stone] -> [Stone]
 uniques [] = []
 uniques (((val1,val2),y):xs) | (val1,val2) `elem` (map fst xs) = uniques (filter ((/= (val1,val2)).fst) xs)
-               | otherwise   = ((val1,val2),y) : uniques xs
+                             | otherwise   = ((val1,val2),y) : uniques xs
 
 removeUsedSquares :: Stone -> [Stone] -> [Stone]
 removeUsedSquares stone [] = []
